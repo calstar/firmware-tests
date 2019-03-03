@@ -1,0 +1,1 @@
+void led_color(bool r, bool g, bool b);
