@@ -7,22 +7,22 @@
 #endif
 
 #ifdef ALTIMETER
-#include "tests/altimeter.cpp"
+#include "tests/altimeter.h"
 #endif
 #ifdef BP
-#include "tests/bp.cpp"
+#include "tests/bp.h"
 #endif
 #ifdef IMU
-#include "tests/imu.cpp"
+#include "tests/imu.h"
 #endif
 #ifdef LED
-#include "tests/led.cpp"
+#include "tests/led.h"
 #endif
 #ifdef RS422_RECEIVER
-#include "tests/RS422_RECEIVER.cpp"
+#include "tests/RS422_RECEIVER.h"
 #endif
 #ifdef RS422
-#include "tests/rs422.cpp"
+#include "tests/rs422.h"
 #endif
 
 int main() {
