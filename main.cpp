@@ -5,6 +5,9 @@
 #ifdef FC
 #include "pins/fc.h"
 #endif
+#ifdef GS
+#include "pins/groundstation.h"
+#endif
 
 #ifdef ALTIMETER
 #include "tests/altimeter.h"
@@ -23,6 +26,21 @@
 #endif
 #ifdef RS422
 #include "tests/rs422.h"
+#endif
+#ifdef GS_DIO
+#include "tests/groundstation_dio.cpp" 
+#endif
+#ifdef PUTS_CHARS_CONTINUOUS
+#include "tests/puts_chars_continuous.cpp"
+#endif
+#ifdef ECHO
+#include "tests/echo.cpp"
+#endif
+#ifdef PINGER
+#include "tests/pinger.cpp"
+#endif
+#ifdef RECEIVER
+#include "tests/receiver.cpp"
 #endif
 
 int main() {
