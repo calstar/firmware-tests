@@ -9,10 +9,14 @@
 
 #include "RFM69/RFM69.hpp"
 #include "mbed.h"
+#include "common_generated.h"
 
 #define BAUDRATE (115200)
 
-int main() {
+using namespace flatbuffers;
+using namespace Calstar;
+
+int run_test() {
 
   DigitalOut rx_led(LED_RX);
   rx_led = 0;
@@ -36,7 +40,7 @@ int main() {
 
   radio.setCSMA(true);
 
-  char rx[64];
+  char rx[64]; /* NOTE: This may be too low for strings we will be receiving. Perhaps make decently larger */
   while (true) {
     rx_led = 0;
 
@@ -45,8 +49,9 @@ int main() {
       rx_led = 1;
       rx[bytes_rxd] = '\0';
       char *data = &rx[1];
-      pc.printf("[rssi: %d, bytes received: %d] %s \r\n", radio.getRSSI(),
-                bytes_rxd, data);
+      const TPCData *tpc_data = GetTPCData(data);
+      pc.printf("[rssi: %d, bytes received: %d] bat v: %f, gps string: %s, state: %d \r\n", radio.getRSSI(),
+                bytes_rxd, tpc_data->BatteryVoltage(), tpc_data->GPSString()->str(), tpc_data->State());
     }
   }
   return 0;

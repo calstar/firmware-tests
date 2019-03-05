@@ -28,21 +28,21 @@
 #include "tests/rs422.h"
 #endif
 #ifdef GS_DIO
-#include "tests/groundstation_dio.cpp" 
+#include "tests/groundstation_dio.h" 
 #endif
 #ifdef PUTS_CHARS_CONTINUOUS
-#include "tests/puts_chars_continuous.cpp"
+#include "tests/puts_chars_continuous.h"
 #endif
 #ifdef ECHO
-#include "tests/echo.cpp"
+#include "tests/echo.h"
 #endif
 #ifdef PINGER
-#include "tests/pinger.cpp"
+#include "tests/pinger.h"
 #endif
 #ifdef RECEIVER
-#include "tests/receiver.cpp"
+#include "tests/receiver.h"
 #endif
 
 int main() {
-    run_test();
+    return run_test();
 }

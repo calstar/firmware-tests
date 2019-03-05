@@ -10,10 +10,24 @@
 
 #include "lib/RFM69/RFM69.hpp"
 #include "mbed.h"
+#include "common_generated.h"
 
 #define BAUDRATE (115200)
 
-int main() {
+using namespace flatbuffers;
+using namespace Calstar;
+
+int run_test() {
+  FlatBufferBuilder builder(1024);
+  TPCState tpcState = TPCState_Pad;
+  Offset<String> gpsString = builder.CreateString("Sample GPS String");
+  float batteryVoltage = 14.8f;
+
+  Offset<TPCData> tpcData = CreateTPCData(builder, tpcState, gpsString, batteryVoltage);
+  builder.Finish(tpcData);
+
+  uint8_t* buf = builder.GetBufferPointer();
+  int size = builder.GetSize();
 
   Serial pc(DEBUG_TX, DEBUG_RX);
   pc.baud(BAUDRATE);
@@ -35,9 +49,9 @@ int main() {
   radio.setCSMA(true);
 
   while (true) {
-    radio.send("wiuwlehfliaw", strlen("wiuwlehfliaw"));
+    radio.send(buf, size);
     radio.sleep();
-    pc.putc('h');
+    pc.printf("sent flatbuffer string\r\n");
     wait(0.5);
   }
   return 0;
