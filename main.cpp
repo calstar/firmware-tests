@@ -1,45 +1,48 @@
 // Kinda annoying, didn't see an mbed option for -include though
-#ifdef BLACKBOX
-#include "pins/blackbox.h"
+#ifdef bb
+#include "pins/bb.h"
 #endif
-#ifdef FC
+#ifdef fc
 #include "pins/fc.h"
 #endif
-#ifdef GS
-#include "pins/groundstation.h"
+#ifdef gs
+#include "pins/gs.h"
+#endif
+#ifdef tpc
+#include "pins/tpc.h"
 #endif
 
-#ifdef ALTIMETER
+#ifdef altimeter
 #include "tests/altimeter.h"
 #endif
-#ifdef BP
+#ifdef bp
 #include "tests/bp.h"
 #endif
-#ifdef IMU
+#ifdef imu
 #include "tests/imu.h"
 #endif
-#ifdef LED
+#ifdef led
 #include "tests/led.h"
 #endif
-#ifdef RS422_RECEIVER
+#ifdef rs422_receiver
 #include "tests/RS422_RECEIVER.h"
 #endif
-#ifdef RS422
+#ifdef rs422
 #include "tests/rs422.h"
 #endif
-#ifdef GS_DIO
-#include "tests/groundstation_dio.h" 
+#ifdef gs_dio
+#include "tests/groundstation_dio.h"
 #endif
-#ifdef PUTS_CHARS_CONTINUOUS
+#ifdef puts_chars_continuous
 #include "tests/puts_chars_continuous.h"
 #endif
-#ifdef ECHO
+#ifdef echo
 #include "tests/echo.h"
 #endif
-#ifdef PINGER
+#ifdef pinger
 #include "tests/pinger.h"
 #endif
-#ifdef RECEIVER
+#ifdef receiver
 #include "tests/receiver.h"
 #endif
 
