@@ -1,6 +1,7 @@
 # How to build
-Run `make board=FC test=LED`, replacing FC with the board and LED with the test to run.
+Run `make build board=FC test=LED`, replacing FC with the board and LED with the test to run.
 If compilation succeeds, the output .bin file will be placed in out/test-$BOARD-$TEST.bin (e.g. test-FC-LED.bin).
+Use `make flash board=FC test=LED` to flash
 
 ## Why are all the files .h instead of cpp?
 Because of the way mbed building works, changing all of them to headers seemed to be the easiest way to get the conditional compilation to work. If they're .cpp, the lack of defined symbols will throw errors when compiling.
