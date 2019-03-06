@@ -20,4 +20,4 @@ For firmware to test functionality of the boards
 * After a build, `out/` will contain the output binary.
 
 # Flatbuffers
-* The schemas are under `flatc/*.fbs`. Edit them and the next time you run a `make build` command they will be recompiled by the `flatc` executable in `flatc/`.
+The schema is located in flatc/common.fbs. Simply edit that, and next time you build with the makefile it will automatically recompile flatc/common.fbs into common_generated.h.
