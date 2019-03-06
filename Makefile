@@ -4,5 +4,5 @@ build: common_generated.h
 flash:
 	st-flash write BUILD/NUCLEO_F401RE/GCC_ARM/flight_computer.bin 0x8000000
 
-common_generated.h:
+common_generated.h: flatc/common.fbs
 	flatc/flatc --cpp flatc/common.fbs
