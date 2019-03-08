@@ -42,6 +42,9 @@
 #ifdef RECEIVER
 #include "tests/receiver.h"
 #endif
+#ifdef RADIO_PASSTHROUGH
+#include "tests/radio_passthrough.h"
+#endif
 
 int main() {
     return run_test();
