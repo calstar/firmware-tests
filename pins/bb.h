@@ -3,3 +3,5 @@
 #define STATE_LED_RED PC_8
 #define STATE_LED_GREEN PA_8
 #define STATE_LED_BLUE PC_9
+#define DEBUG_RX PA_3
+#define DEBUG_TX PA_2

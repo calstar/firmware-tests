@@ -1,11 +1,11 @@
-build_target = "NUCLEO_F401RE"
-build_toolchain = "GCC_ARM"
-build_dir = "BUILD"
-project_name = "firmware-tests"
+build_target = NUCLEO_F401RE
+build_toolchain = GCC_ARM
+build_dir = BUILD
+project_name = firmware-tests
 
-outdir = "out/"
-outname = "test-$(board)-$(test).bin"
-outpath = "$(outdir)$(outname)"
+outdir = out/
+outname = test-$(board)-$(test).bin
+outpath = $(outdir)$(outname)
 
 validate:
 ifndef board

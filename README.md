@@ -1,9 +1,23 @@
+# firmware-tests
+For firmware to test functionality of the boards
+
 # How to build
-Run `make board=FC test=LED`, replacing FC with the board and LED with the test to run.
-If compilation succeeds, the output .bin file will be placed in out/test-$BOARD-$TEST.bin (e.g. test-FC-LED.bin).
+* Run `make build board=$BOARD ` to compile flatbuffer schemas, build the `.bin` file, and copy it to `out/test-$BOARD-$TEST.bin`.
+    * `$BOARD` must be one of: `bb` (Black Box), `fc` (Flight Computer), `gs` (Ground Station), `tpc` (Telemetry/Power Control).
+    * `$TEST` must be the preprocessor directive corresponding to the test file you want to run (probably the file name without extension)
 
-## Why are all the files .h instead of cpp?
-Because of the way mbed building works, changing all of them to headers seemed to be the easiest way to get the conditional compilation to work. If they're .cpp, the lack of defined symbols will throw errors when compiling.
+# How to add a new test
+* Add a header file to tests/ and include it from main, surrounding it with #ifdefs for the filename
 
-## How do I compile with flatbuffers?
+# Why are all the files .h instead of cpp?
+* Because of the way mbed building works, changing all of them to headers seemed to be the easiest way to get the conditional compilation to work. If they're .cpp, the lack of defined symbols will throw errors when compiling.
+
+# Relevant Folders
+* The `pins` folder contains pin definitions for each board
+* The `tests` folder contains test definitions
+* The flatbuffer schemas are under `flatc/*.fbs` (more details below).
+* `flatbuffers/` contains the necessary flatbuffer includes and should not be modified.
+* After a build, `out/` will contain the output binary.
+
+# Flatbuffers
 The schema is located in flatc/common.fbs. Simply edit that, and next time you build with the makefile it will automatically recompile flatc/common.fbs into common_generated.h.

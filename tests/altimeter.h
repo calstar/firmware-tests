@@ -43,6 +43,8 @@ int run_test() {
         altimeter.setModeActive();
         }
     } else {
-        debug_talk.printf("Failed to connect to altimeter\n");
+        while (true) {
+            debug_talk.printf("Failed to connect to altimeter, whoami: 0x%x\n", whoami);
+        }
     }
 }
