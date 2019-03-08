@@ -26,11 +26,17 @@ int run_test() {
 
   int bytes_rxd = 0;
   char rx_buf[128];
+  char tx_buf[128];
+  uint8_t i = 0;
   while (true) {
     if (pc.readable()) {
-      char c = pc.getc();
-      radio.send(&c, 1);
-      radio.sleep();
+      tx_buf[i] = pc.getc();
+      ++i;
+      if (tx_buf[i - 1] == '\n' || i == 128) {
+        radio.send(tx_buf, i);
+        i = 0;
+        radio.sleep();
+      }
     }
     bytes_rxd = radio.receive(rx_buf, sizeof(rx_buf));
     if (bytes_rxd > 1) {
