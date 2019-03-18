@@ -48,6 +48,12 @@
 #ifdef radio_passthrough
 #include "tests/radio_passthrough.h"
 #endif
+#ifdef analog_in
+#include "tests/analog_in.h"
+#endif
+#ifdef gps
+#include "tests/gps.h"
+#endif
 
 int main() {
     return run_test();
