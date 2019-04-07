@@ -57,21 +57,10 @@ Altitude* MPL3115A2::readAltitude(Altitude* a)
         // We leave the altitude object as is if we encounter an error.
         return a;
     }
-        
-    // Get the new data from the sensor.
-    _i2c->start();                              // Start
-    if (_i2c->write(MPL3115A2_ADDRESS) != 1)    // A write to device
-        debugOut("MPL3115A2::readAltitude: Sensor failed to respond to write request at address 0x%X\r\n", MPL3115A2_ADDRESS);
-    
-    if (_i2c->write(OUT_P_MSB) != 1)            // Register to read
-        debugOut("MPL3115A2::readAltitude: Sensor at address 0x%X did not acknowledge register 0x%X\r\n", MPL3115A2_ADDRESS, OUT_P_MSB);
-    
-    // Write the data directly into our Altitude object. This object
-    // takes care of converting the compressed data from the sensor, and
-    // provides functions to get the data in various units. And it also
-    // has a print function to output the data as a string.
-    int result = _i2c->read(MPL3115A2_ADDRESS, (*a), Altitude::size);
-    _debug->printf("Result: %d\n", result);
+
+    (*a)[0] = i2cRead(OUT_P_MSB);
+    (*a)[1] = i2cRead(OUT_P_CSB);
+    (*a)[2] = i2cRead(OUT_P_LSB);
     a->setAltitude();
 
     return a;
@@ -88,14 +77,9 @@ Pressure* MPL3115A2::readPressure(Pressure* p)
         return p;
     }
 
-    _i2c->start(); 
-    if (_i2c->write(MPL3115A2_ADDRESS) != 1)
-        debugOut("MPL3115A2::readPressure: Sensor failed to respond to write request at address 0x%X\r\n", MPL3115A2_ADDRESS);
-    
-    if (_i2c->write(OUT_P_MSB) != 1) 
-        debugOut("MPL3115A2::readPressure: Sensor at address 0x%X did not acknowledge register 0x%X\r\n", MPL3115A2_ADDRESS, OUT_P_MSB);
-    
-    _i2c->read(MPL3115A2_ADDRESS, (*p), Pressure::size);
+    (*p)[0] = i2cRead(OUT_P_MSB);
+    (*p)[1] = i2cRead(OUT_P_CSB);
+    (*p)[2] = i2cRead(OUT_P_LSB);
     p->setPressure();
 
     return p;

@@ -1,6 +1,7 @@
 /*
     Change log from original:
         - debugOut function changed from variadic function to macro
+        - readPressure and readAltitude changed to use i2cRead
 */
 
 /*
