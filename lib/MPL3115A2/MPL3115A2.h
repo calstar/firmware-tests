@@ -1,4 +1,9 @@
 /*
+    Change log from original:
+        - debugOut function changed from variadic function to macro
+*/
+
+/*
     MPL3115A2 Barometric Pressure and Tempurature Sensor Library
     By: Michael Lange
     Date: March 31, 2014
@@ -99,6 +104,8 @@
 #define OFF_T               0x2C //  | 0x00 |         |     | 0x           |
 #define OFF_H               0x2D //  | 0x00 |         |     | 0x           |
 
+#define debugOut(...) if (_debug != NULL) _debug->printf(__VA_ARGS__);
+
 //! MPL3115A2 I2C Barometric Pressure and Tempurature Sensor Library
 //! This class wraps most of the function in the MPL3115A2 sensor leaving out the FIFO and interrupt system.
 class MPL3115A2
@@ -181,7 +188,7 @@ private:
     //! Debug method that mimics the printf function, but will output nothing if _debug has not
     //! been set. This means you can safely us it in your code and nothing will happen if you don't
     //! assign the _debug object.
-    void debugOut(const char * format, ...);
+    //void debugOut(const char * format, ...);
 
     //! This helper function is used to CLEAR bits. The mask should contain 1s in the position
     //! where the bits need to be cleared. One or more bits can be cleared this way.

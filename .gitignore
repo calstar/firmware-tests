@@ -2,6 +2,8 @@
 ~*~
 .vs/
 obj/
+.vscode/
+out/
 
 *.swp
 

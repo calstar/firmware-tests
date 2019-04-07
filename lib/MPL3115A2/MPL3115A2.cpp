@@ -209,12 +209,3 @@ void MPL3115A2::i2cWrite(char regAddr, char value)
     if (_i2c->write(MPL3115A2_ADDRESS, cmd, 2) != 0)
         debugOut("MPL3115A2::i2cWrite: Failed writing value (%d, 0x%X) to register 0x%X\r\n", value, regAddr);    
 }
-
-void MPL3115A2::debugOut(const char * format, ...)
-{
-    if (_debug == NULL)
-        return;
-        
-    va_list arg;
-    _debug->printf(format, arg);
-}
