@@ -6,6 +6,8 @@
 
 #define BAUDRATE (115200)
 
+#define MEASURE_INTERVAL_US (5000000)
+
 int run_test() {
   USBSerial pc;
   RFM69 radio(SPI1_MOSI, SPI1_MISO, SPI1_SCLK, SPI1_SSEL, RADIO_RST, true);
@@ -26,22 +28,22 @@ int run_test() {
 
   int bytes_rxd = 0;
   char rx_buf[512];
-  char tx_buf[512];
-  uint8_t i = 0;
+  uint32_t num_bytes = 0;
+  Timer t;
+  t.start();
+  us_timestamp_t t0 = t.read_high_resolution_us();
+
   while (true) {
-    // if (pc.readable()) {
-    //   tx_buf[i] = pc.getc();
-    //   ++i;
-    //   if (tx_buf[i - 1] == '\n' || i == 128) {
-    //     radio.send(tx_buf, i);
-    //     i = 0;
-    // //    radio.sleep();
-    //   }
-    // }
+    if (t.read_high_resolution_us() - t0 >= MEASURE_INTERVAL_US) {
+      t0 = t.read_high_resolution_us();
+      pc.printf("bits per sec: %f\r\n", (num_bytes*8)/((float)MEASURE_INTERVAL_US/1000000.f));
+      num_bytes = 0;
+    }
     bytes_rxd = radio.receive(rx_buf, sizeof(rx_buf));
     if (bytes_rxd > 1) {
       rx_buf[bytes_rxd] = '\0';
-      pc.printf("%s", rx_buf + 1);
+      // pc.printf("%s", rx_buf + 1);
+      num_bytes += bytes_rxd - 1;
     }
   }
   return 0;

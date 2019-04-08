@@ -42,8 +42,8 @@
 #ifdef pinger
 #include "tests/pinger.h"
 #endif
-#ifdef receiver
-#include "tests/receiver.h"
+#ifdef flatbuf_receiver
+#include "tests/flatbuf_receiver.h"
 #endif
 #ifdef radio_passthrough
 #include "tests/radio_passthrough.h"
@@ -53,6 +53,12 @@
 #endif
 #ifdef gps
 #include "tests/gps.h"
+#endif
+#ifdef radio_pinger
+#include "tests/radio_pinger.h"
+#endif
+#ifdef radio_bits_per_sec
+#include "tests/radio_bits_per_sec.h"
 #endif
 
 int main() {
