@@ -10,7 +10,7 @@
 
 #include "mbed.h"
 
-int main() {
+int run_test() {
   DigitalOut io1(IO1);
   io1 = 0;
   DigitalOut io2(IO2);

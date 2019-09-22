@@ -31,7 +31,7 @@
 #include "tests/rs422.h"
 #endif
 #ifdef gs_dio
-#include "tests/groundstation_dio.h"
+#include "tests/gs_dio.h"
 #endif
 #ifdef puts_chars_continuous
 #include "tests/puts_chars_continuous.h"
