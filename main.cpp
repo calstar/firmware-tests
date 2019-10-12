@@ -60,6 +60,9 @@
 #ifdef radio_bits_per_sec
 #include "tests/radio_bits_per_sec.h"
 #endif
+#ifdef kx222
+#include "tests/kx222.h"
+#endif
 
 int main() {
     return run_test();
