@@ -2,9 +2,9 @@
 For firmware to test functionality of the boards
 
 # How to build
-* Run `make build board=$BOARD ` to compile flatbuffer schemas, build the `.bin` file, and copy it to `out/test-$BOARD-$TEST.bin`.
+* Run `make build board=$BOARD test=$TEST` to compile flatbuffer schemas, build the `.bin` file, and copy it to `out/test-$BOARD-$TEST.bin`.
     * `$BOARD` must be one of: `bb` (Black Box), `fc` (Flight Computer), `gs` (Ground Station), `tpc` (Telemetry/Power Control).
-    * `$TEST` must be the preprocessor directive corresponding to the test file you want to run (probably the file name without extension)
+    * `$TEST` must be the preprocessor directive corresponding to the test file you want to run (probably the file name without extension). The definitive list of options are the preprocessor defines used in `main.cpp`, although usually they are simply the name of the test (without the `.h`)
 
 # How to add a new test
 * Add a header file to tests/ and include it from main, surrounding it with #ifdefs for the filename
