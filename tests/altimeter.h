@@ -3,7 +3,7 @@
 #include "lib/MPL3115A2/Altitude.h"
 #include "util.h"
 
-#define BAUDRATE 9600
+#define BAUDRATE (115200)
 I2C i2c_sensors(I2C_SENSOR_SDA, I2C_SENSOR_SCL);
 Serial debug_talk(DEBUG_TX, DEBUG_RX);
 
@@ -20,21 +20,22 @@ int run_test() {
     mpl.setModeActive();
 
     debug_talk.baud(BAUDRATE);
-    debug_talk.printf("\nBegin mpl test\n");
+    debug_talk.printf("\r\nBegin mpl test\r\n");
     uint8_t whoami = mpl.whoAmI();
-    debug_talk.printf("Whoami: 0x%x\n", whoami);
+    debug_talk.printf("Whoami: 0x%x\r\n", whoami);
     if (whoami == 0xC4) {
-        debug_talk.printf("Successfully connected\n");
+        debug_talk.printf("Successfully connected\r\n");
         Altitude a;
         Temperature t;
         Pressure p;
+        debug_talk.printf("Altitude (meters)\r\n");
         while (true) {
             mpl.readAltitude(&a);
-            debug_talk.printf("%f\n", a.altitude(Altitude::METERS));
+            debug_talk.printf("%f\r\n", a.altitude(Altitude::METERS));
         }
     } else {
         while (true) {
-            debug_talk.printf("Failed to connect to mpl, whoami: 0x%x\n", whoami);
+            debug_talk.printf("Failed to connect to mpl, whoami: 0x%x\r\n", whoami);
         }
     }
 }
