@@ -13,19 +13,21 @@ int run_test() {
     debug_talk.baud(BAUDRATE);
     debug_talk.printf("Begin imu test\r\n");
     mpu.initMPU9250();
+    
+    while(true) {
+        uint8_t whoami = mpu.readByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250);
+        debug_talk.printf("Whoami: 0x%x\r\n", whoami);
 
-    uint8_t whoami = mpu.readByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250);
-    debug_talk.printf("Whoami: 0x%x\r\n", whoami);
+        // uint8_t pwr_mgmt_1 = mpu.readByte(MPU9250_ADDRESS, PWR_MGMT_1);
+        // debug_talk.printf("PWR_MGMT_1: 0x%x\r\n", pwr_mgmt_1);
 
-    // uint8_t pwr_mgmt_1 = mpu.readByte(MPU9250_ADDRESS, PWR_MGMT_1);
-    // debug_talk.printf("PWR_MGMT_1: 0x%x\r\n", pwr_mgmt_1);
+        // uint8_t gyro_cfg = mpu.readByte(MPU9250_ADDRESS, GYRO_CONFIG);
+        // debug_talk.printf("GYRO_CONFIG: 0x%x\r\n", gyro_cfg);
 
-    // uint8_t gyro_cfg = mpu.readByte(MPU9250_ADDRESS, GYRO_CONFIG);
-    // debug_talk.printf("GYRO_CONFIG: 0x%x\r\n", gyro_cfg);
-
-    if (whoami == 0x71) {
-        debug_talk.printf("Successfully connected\r\n");
-    } else {
-        debug_talk.printf("Failed to connect to IMU\r\n");
+        if (whoami == 0x71) {
+            debug_talk.printf("Successfully connected\r\n");
+        } else {
+            debug_talk.printf("Failed to connect to IMU\r\n");
+        }
     }
 }
