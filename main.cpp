@@ -63,6 +63,9 @@
 #ifdef kx222
 #include "tests/kx222.h"
 #endif
+#ifdef bmp388
+#include "tests/bmp388.h"
+#endif
 
 int main() {
     return run_test();
