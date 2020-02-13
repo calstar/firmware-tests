@@ -11,7 +11,7 @@ int8_t bmp388_spi_read(uint8_t dev_id, uint8_t reg_addr, uint8_t *data, uint16_t
   bmp388_spi.select();
   data[0] = bmp388_spi.write(reg_addr);
   for (uint16_t i = 1; i < len; ++i) {
-    data[i] = bmp388_spi.write(0)
+    data[i] = bmp388_spi.write(0);
   }
   bmp388_spi.deselect();
 }
