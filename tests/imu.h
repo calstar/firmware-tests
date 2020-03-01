@@ -13,8 +13,8 @@ int run_test() {
     debug_talk.baud(BAUDRATE);
     debug_talk.printf("Begin imu test\r\n");
     mpu.initMPU9250();
+    
     while(true) {
-        mpu.writeByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250, 0x52);
         uint8_t whoami = mpu.readByte(MPU9250_ADDRESS, WHO_AM_I_MPU9250);
         debug_talk.printf("Whoami: 0x%x\r\n", whoami);
 

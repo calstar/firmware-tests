@@ -1,6 +1,6 @@
 build_target = NUCLEO_F401RE
 build_toolchain = GCC_ARM
-build_dir = BUILD/$(board)/$(test)
+build_dir = BUILD
 project_name = firmware-tests
 
 outdir = out/
