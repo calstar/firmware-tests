@@ -29,29 +29,28 @@ int run_test() {
   uint8_t* buf = builder.GetBufferPointer();
   int size = builder.GetSize();
 
-  Serial pc(DEBUG_TX, DEBUG_RX);
-  pc.baud(BAUDRATE);
-  pc.set_blocking(false);
+  UnbufferedSerial pc_dev(DEBUG_TX, DEBUG_RX, BAUDRATE);
+  FILE* pc = fdopen(&pc_dev, "w");
 
   RFM69 radio(SPI1_MOSI, SPI1_MISO, SPI1_SCLK, SPI1_SSEL, RADIO_RST, true);
   radio.reset();
-  pc.printf("radio reset\r\n");
+  fprintf(pc, "radio reset\r\n");
 
   radio.init();
-  pc.printf("radio init'd\r\n");
+  fprintf(pc, "radio init'd\r\n");
 
   radio.setAESEncryption("sampleEncryptKey", strlen("sampleEncryptKey"));
   radio.sleep();
 
   radio.setPowerDBm(10);
-  pc.printf("radio high powered\r\n");
+  fprintf(pc, "radio high powered\r\n");
 
   radio.setCSMA(true);
 
   while (true) {
     radio.send(buf, size);
     radio.sleep();
-    pc.printf("sent flatbuffer string\r\n");
+    fprintf(pc, "sent flatbuffer string\r\n");
     wait(0.5);
   }
   return 0;

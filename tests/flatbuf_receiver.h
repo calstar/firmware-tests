@@ -30,23 +30,20 @@ int run_test() {
   rx_led = 0;
 
   USBSerial pc;
-  // Serial pc(DEBUG_TX, DEBUG_RX);
-  // pc.baud(BAUDRATE);
-  // pc.set_blocking(false);
 
   RFM69 radio(SPI1_MOSI, SPI1_MISO, SPI1_SCLK, SPI1_SSEL, RADIO_RST, true);
   radio.reset();
-  pc.printf("radio reset\r\n");
+  fprintf(pc, "radio reset\r\n");
 
   radio.init();
-  pc.printf("radio init'd\r\n");
+  fprintf(pc, "radio init'd\r\n");
 
   radio.setAESEncryption(ENCRYPT_KEY, strlen(ENCRYPT_KEY));
   // radio.sleep();
 
   radio.setHighPowerSettings(true);
   radio.setPowerDBm(20);
-  pc.printf("radio high powered\r\n");
+  fprintf(pc, "radio high powered\r\n");
 
   // radio.setCSMA(true);
 
@@ -63,11 +60,11 @@ int run_test() {
       } else {
         rx_led = 1;
       }
-      pc.printf("R\r\n");
+      fprintf(pc, "R\r\n");
       rx[bytes_rxd] = '\0';
       char *data = &rx[1];
 
-      pc.printf("[%s BYTES %d]", data, bytes_rxd - 1);
+      fprintf(pc, "[%s BYTES %d]", data, bytes_rxd - 1);
       bool found_s = false;
       int i = 0;
       for (i = 0; i < bytes_rxd - 1; ++i) {
@@ -77,26 +74,26 @@ int run_test() {
         }
       }
       if (found_s) {
-        pc.printf("found s: %c %c %c %c\r\n", data[i], data[i + 1], data[i + 2],
+        fprintf(pc, "found s: %c %c %c %c\r\n", data[i], data[i + 1], data[i + 2],
                   data[i + 3]);
       }
-      pc.printf("%d\r\n", *((int *)&data[i + 4]));
+      fprintf(pc, "%d\r\n", *((int *)&data[i + 4]));
       // Verifier v((uint8_t *)&data[8], bytes_rxd - 1-12);
       // if (VerifyDownlinkMsgBuffer(v)) {
       // const DownlinkMsg *msg = GetDownlinkMsg(&data[i + 8]);
       // const uint8_t expectedBytes = msg->Bytes();
-      // pc.printf("Expected: %d\r\n", expectedBytes);
+      // fprintf(pc, "Expected: %d\r\n", expectedBytes);
       //   if (bytes_rxd - 1 > expectedBytes) {
       //     Verifier v2((uint8_t *)data, expectedBytes);
       //     if (VerifyDownlinkMsgBuffer(v2)) {
 
-      // pc.printf("tstamp: %" PRIu64 ", bytes: %d, state: %d, fc.pwr: %d, "
+      // fprintf(pc, "tstamp: %" PRIu64 ", bytes: %d, state: %d, fc.pwr: %d, "
       //           "gps string: %s, bat.v: %u, ",
       //           msg->TimeStamp(), (int)msg->Bytes(), (int)msg->State(),
       //           (int)msg->FCPowered(), msg->GPSString()->str().c_str(),
       //           (uint32_t)msg->BattVoltage());
       // if (msg->FCMsg()) {
-      //   pc.printf(
+      //   fprintf(pc, 
       //       "bps: %d %d, %d %d, %d %d, %d %d, %d %d, %d %d, %d %d\r\n",
       //       (int)msg->FCMsg()->BP1Continuity(),
       //       (int)msg->FCMsg()->BP1Ignited(),
@@ -113,13 +110,13 @@ int run_test() {
       //       (int)msg->FCMsg()->BP7Continuity(),
       //       (int)msg->FCMsg()->BP7Ignited());
       // }
-      //       pc.printf("\r\n");
+      //       fprintf(pc, "\r\n");
       //     } else {
-      //       pc.printf("Failed expected bytes buffer verifier\r\n");
+      //       fprintf(pc, "Failed expected bytes buffer verifier\r\n");
       //     }
       //   }
       // } else {
-      //   pc.printf("Failed verify\r\n");
+      //   fprintf(pc, "Failed verify\r\n");
       // }
     }
   }

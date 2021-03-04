@@ -19,14 +19,13 @@
 #define AIN_TO_VOLTAGE (3.3f * 502.2f / 92.2f * 1.10201042442293f)
 
 int run_test() {
-  Serial pc(DEBUG_TX, DEBUG_RX);
-  pc.baud(BAUDRATE);
-  pc.set_blocking(false);
+  UnbufferedSerial pc_dev(DEBUG_TX, DEBUG_RX, BAUDRATE);
+  FILE* pc = fdopen(&pc_dev, "w");
 
   AnalogIn battVoltage(BATT_VOLTAGE);
 
   while (true) {
-    pc.printf("Reading %f = %f V\r\n", (float)battVoltage, round(((float)battVoltage) * AIN_TO_VOLTAGE * 100.0f)/100.0f);
+    fprintf(pc, "Reading %f = %f V\r\n", (float)battVoltage, round(((float)battVoltage) * AIN_TO_VOLTAGE * 100.0f)/100.0f);
   }
 
   return 0;

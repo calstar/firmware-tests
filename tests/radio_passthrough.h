@@ -11,10 +11,10 @@ int run_test() {
   RFM69 radio(SPI1_MOSI, SPI1_MISO, SPI1_SCLK, SPI1_SSEL, RADIO_RST, true);
 
   radio.reset();
-  pc.printf("radio reset\r\n");
+  fprintf(pc, "radio reset\r\n");
 
   radio.init();
-  pc.printf("radio init'd\r\n");
+  fprintf(pc, "radio init'd\r\n");
 
   radio.setAESEncryption(ENCRYPT_KEY, strlen(ENCRYPT_KEY));
   //radio.sleep();
@@ -41,7 +41,7 @@ int run_test() {
     bytes_rxd = radio.receive(rx_buf, sizeof(rx_buf));
     if (bytes_rxd > 1) {
       rx_buf[bytes_rxd] = '\0';
-      pc.printf("%s", rx_buf + 1);
+      fprintf(pc, "%s", rx_buf + 1);
     }
   }
   return 0;

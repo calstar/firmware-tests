@@ -5,22 +5,22 @@
 #define BAUDRATE (115200)
 
 int run_test(){
-    Serial pc(DEBUG_TX, DEBUG_RX);
-    pc.baud(BAUDRATE);
-    pc.printf("PC connected.\r\n");
+    BufferedSerial pc_dev(DEBUG_TX, DEBUG_RX, BAUDRATE);
+    FILE* pc = fdopen(&pc_dev, "w");
+    fprintf(pc, "PC connected.\r\n");
 
-    Serial tpc(TPC_TX, TPC_RX);
-    tpc.baud(BAUDRATE);
+    Bufferederial tpc_dev(TPC_TX, TPC_RX, BAUDRATE);
+    FILE* tpc = fdopen(&tpc_dev, "w");
     //char buffer[50];
 
     while(true){
-        //pc.printf("PC connected.\r\n");
+        //fprintf(pc, "PC connected.\r\n");
 
         if (tpc.readable())
         {
             //tpc.scanf("%s", &buffer);
             char c = tpc.getc();
-            pc.printf("%c", c);
+            fprintf(pc, "%c", c);
         }
     }
 }
