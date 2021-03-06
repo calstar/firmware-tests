@@ -16,8 +16,8 @@ ifndef test
 endif
 
 build: validate common_generated.h
-	time mbed compile --target $(build_target) --toolchain $(build_toolchain) -D$(board) -D$(test) \
-	&& mkdir -p $(outdir) && cp $(build_dir)/$(build_target)/$(build_toolchain)/$(project_name).bin $(outpath) \
+	time mbed compile --target $(build_target) --source . --source /home/vagrant/mbed --toolchain $(build_toolchain) -D$(board) -D$(test) --build $(build_dir) \
+	&& mkdir -p $(outdir) && cp $(build_dir)/$(project_name).bin $(outpath) \
 	&& echo "Copied output to $(outpath)"
 
 flash: validate

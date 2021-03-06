@@ -1,13 +1,20 @@
 #include "RFM69/RFM69.hpp"
 #include "mbed.h"
-#include "USBSerial.h"
 
 #define ENCRYPT_KEY "CALSTARENCRYPTKE"
 
 #define BAUDRATE (115200)
 
 int run_test() {
-  USBSerial pc;
+  #ifdef gs
+    #include "USBSerial.h"
+    USBSerial pc;
+  #else
+    Serial pc(DEBUG_TX, DEBUG_RX);
+    pc.baud(BAUDRATE);
+    pc.set_blocking(false);
+  #endif
+
   RFM69 radio(SPI1_MOSI, SPI1_MISO, SPI1_SCLK, SPI1_SSEL, RADIO_RST, true);
 
   radio.reset();
