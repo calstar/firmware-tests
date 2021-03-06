@@ -4,13 +4,11 @@
 #define GPS_BAUDRATE (9600)
 
 int run_test(){
-    Serial pc(DEBUG_TX, DEBUG_RX);
-    pc.baud(UART_BAUDRATE);
-    pc.set_blocking(false);
+    UnbufferedSerial pc_dev(DEBUG_TX, DEBUG_RX, UART_BAUDRATE);
+    FILE* pc = fdopen(&pc_dev, "w");
 
-    Serial gps_uart(GPS_TX, GPS_RX);
-    gps_uart.baud(GPS_BAUDRATE);
-    gps_uart.set_blocking(false);
+    UnbufferedSerial gps_uart_dev(GPS_TX, GPS_RX, GPS_BAUDRATE);
+    FILE* gps_uart = fdopen(&gps_uart_dev, "w");
 
     while (true) {
         // while (pc.readable()) {

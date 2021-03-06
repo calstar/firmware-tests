@@ -12,9 +12,8 @@
 #define BAUDRATE (115200)
 
 int run_test() {
-  Serial pc(DEBUG_TX, DEBUG_RX);
-  pc.baud(BAUDRATE);
-  pc.set_blocking(false);
+  UnbufferedSerial pc_dev(DEBUG_TX, DEBUG_RX, BAUDRATE);
+  FILE* pc = fdopen(&pc_dev, "w");
 
   while (true) {
     pc.putc('h');

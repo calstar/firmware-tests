@@ -5,7 +5,7 @@
 
 #define BAUDRATE (115200)
 I2C i2c_sensors(I2C_SENSOR_SDA, I2C_SENSOR_SCL);
-Serial debug_talk(DEBUG_TX, DEBUG_RX);
+BufferedSerial debug_talk_dev(DEBUG_TX, DEBUG_RX, BAUDRATE);
 
 Altitude altitude;
 MPL3115A2 mpl(&i2c_sensors, &debug_talk);
@@ -19,23 +19,23 @@ int run_test() {
     mpl.setModeAltimeter();
     mpl.setModeActive();
 
-    debug_talk.baud(BAUDRATE);
-    debug_talk.printf("\r\nBegin mpl test\r\n");
+    FILE* debug_talk = fdopen(&debug_talk_dev, "w");
+    fprintf(debug_talk, "\r\nBegin mpl test\r\n");
     uint8_t whoami = mpl.whoAmI();
-    debug_talk.printf("Whoami: 0x%x\r\n", whoami);
+    fprintf(debug_talk, "Whoami: 0x%x\r\n", whoami);
     if (whoami == 0xC4) {
-        debug_talk.printf("Successfully connected\r\n");
+        fprintf(debug_talk, "Successfully connected\r\n");
         Altitude a;
         Temperature t;
         Pressure p;
-        debug_talk.printf("Altitude (meters)\r\n");
+        fprintf(debug_talk, "Altitude (meters)\r\n");
         while (true) {
             mpl.readAltitude(&a);
-            debug_talk.printf("%f\r\n", a.altitude(Altitude::METERS));
+            fprintf(debug_talk, "%f\r\n", a.altitude(Altitude::METERS));
         }
     } else {
         while (true) {
-            debug_talk.printf("Failed to connect to mpl, whoami: 0x%x\r\n", whoami);
+            fprintf(debug_talk, "Failed to connect to mpl, whoami: 0x%x\r\n", whoami);
         }
     }
 }

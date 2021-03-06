@@ -16,9 +16,8 @@ int main() {
   DigitalOut rx_led(LED_RX);
   rx_led = 0;
 
-  Serial pc(DEBUG_TX, DEBUG_RX);
-  pc.baud(BAUDRATE);
-  pc.set_blocking(false);
+  UnbufferedSerial pc_dev(DEBUG_TX, DEBUG_RX, BAUDRATE);
+  FILE* pc = fdopen(&pc_dev, "w");
 
   while (true) {
     if (pc.readable()) {

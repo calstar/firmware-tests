@@ -33,15 +33,15 @@
 #define BATTERY_READ (PC2)
 
 int run_test(){
-    Serial pc(UART_DEBUG_TX, UART_DEBUG_RX);
-    pc.baud(BAUDRATE);
-    pc.printf("PC connected.\r\n");
+    BufferedSerial pc_dev(UART_DEBUG_TX, UART_DEBUG_RX, BAUDRATE);
+    FILE* pc = fdopen(&pc_dev, "w");
+    fprintf(pc, "PC connected.\r\n");
 
-    Serial fc(UART_FC_TX, UART_FC_RX);
-    fc.baud(BAUDRATE);
+    BufferedSerial fc_dev(UART_FC_TX, UART_FC_RX, BAUDRATE);
+    FILE* fc = fdopen(&fc_dev, "w");
 
     while(true){
-        pc.printf("PC connected.\r\n");
-        fc.printf("RS422 connected.\r\n");
+        fprintf(pc, "PC connected.\r\n");
+        fprintf(fc, "RS422 connected.\r\n");
     }
 }
