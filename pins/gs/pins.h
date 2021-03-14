@@ -1,3 +1,6 @@
+#ifndef PINS_H
+#define PINS_H
+
 #define DEBUG_TX (PC_6)
 #define DEBUG_RX (PC_7)
 
@@ -15,3 +18,5 @@
 
 #define LED_RX (PB_12)
 #define LED_TX (PB_13)
+
+#endif 

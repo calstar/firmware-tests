@@ -1,23 +1,46 @@
-# firmware-tests
-For firmware to test functionality of the boards
+Firmware Tests
+================
 
-# How to build
-* Run `make build board=$BOARD test=$TEST` to compile flatbuffer schemas, build the `.bin` file, and copy it to `out/test-$BOARD-$TEST.bin`.
-    * `$BOARD` must be one of: `bb` (Black Box), `fc` (Flight Computer), `gs` (Ground Station), `tpc` (Telemetry/Power Control).
-    * `$TEST` must be the preprocessor directive corresponding to the test file you want to run (probably the file name without extension). The definitive list of options are the preprocessor defines used in `main.cpp`, although usually they are simply the name of the test (without the `.h`)
+Unit testing specific functionality of each board.
+
+# Setup
+
+Clone the repo, run `mbed deploy` from the root of the repo to get the mbed files,
+and then clone the submodules via `git submodule update --init --recursive`.
+
+# How to build a test
+* Run `make build board=$BOARD test=$TEST` to compile and copy the `.bin` to `out/$TEST_$BOARD.bin`.
+    * `$BOARD` must be one of: 
+      * `cas` (Common Avionics System)
+      * `bb` (Black Box)
+      * `gs` (Ground Station).
+    * `$TEST` must be the directory name of the test to compile. One of:
+      * `uart_echo`
+      * `led`
+
+Example: `make build board=cas test=uart_echo`
 
 # How to add a new test
-* Add a header file to tests/ and include it from main, surrounding it with #ifdefs for the filename
+Create a directory with the test's name and place its source code in there.
 
-# Why are all the files .h instead of cpp?
-* Because of the way mbed building works, changing all of them to headers seemed to be the easiest way to get the conditional compilation to work. If they're .cpp, the lack of defined symbols will throw errors when compiling.
+**TODO**: implement the below.
+
+If the test requires a certain board, specify this by placing the relevant of 
+the following before including any headers in the main file: 
+ `#define REQUIRE_$BOARD`, e.g. `#define REQUIRE_CAS`
+
+For CAS tests, to include specific module pin definitions, add the following as needed:
+* `#define REQUIRE_CAS_PYRO`
+* `#define REQUIRE_CAS_RADIO`
+* `#define REQUIRE_CAS_PROP`
+
+# How to add a new board
+
+Add a new subdirectory to the `pins` folder with the board's name.
+If the board is a submodule of CAS, instead add a file titled `cas_<module name>.h`
+in `pins/cas` and edit the `pins/cas/pins.h` file to include the new module file
+when needed. 
 
 # Relevant Folders
-* The `pins` folder contains pin definitions for each board
-* The `tests` folder contains test definitions
-* The flatbuffer schemas are under `flatc/*.fbs` (more details below).
-* `flatbuffers/` contains the necessary flatbuffer includes and should not be modified.
-* After a build, `out/` will contain the output binary.
-
-# Flatbuffers
-The schema is located in flatc/common.fbs. Simply edit that, and next time you build with the makefile it will automatically recompile flatc/common.fbs into common_generated.h.
+* `pins`: contains pin definitions by board.
+* `lib`: Libraries submodule.

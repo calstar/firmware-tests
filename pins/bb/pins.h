@@ -1,3 +1,6 @@
+#ifndef PINS_H
+#define PINS_H
+
 #define I2C_SENSOR_SDA PB_7
 #define I2C_SENSOR_SCL PB_6
 
@@ -22,3 +25,5 @@
 
 #define DEBUG_RX PA_3
 #define DEBUG_TX PA_2
+
+#endif
