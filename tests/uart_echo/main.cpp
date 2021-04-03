@@ -4,6 +4,7 @@
  * Use to verify UART RX and TX from board works.
  *
  * STAR Avionics
+ * https://stars.berkeley.edu
  */ 
 
 #include "mbed.h"
