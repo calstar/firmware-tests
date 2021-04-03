@@ -16,7 +16,7 @@ ifndef test
 endif
 
 build: validate 
-	time mbed compile --target $(build_target) --toolchain $(build_toolchain) --source mbed-os --source lib --source pins/$(board) --source $(test) \
+	time mbed compile --target $(build_target) --toolchain $(build_toolchain) --source mbed-os --source lib --source pins/$(board) --source tests/$(test) \
 		&& mkdir -p $(outdir) && cp $(build_dir)/mbed-os.bin $(outpath) \
 	&& echo "Copied output to $(outpath)"
 
