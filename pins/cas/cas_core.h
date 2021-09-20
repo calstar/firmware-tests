@@ -28,6 +28,8 @@ Default definitions for Common Avionics System (CAS) Core module.
 // Component definition
 #define BMP388_SDA I2C3_SDA
 #define BMP388_SCL I2C3_SCL
+#define MAX17049_SDA I2C3_SDA
+#define MAX17049_SCL I2C3_SCL
 
 #define SD_CARD_SCK SPI3_SCK
 #define SD_CARD_MISO SPI3_MISO
